@@ -1,42 +1,44 @@
-#include <iostream>
 #include <algorithm>
-#include <vector>
+#include <iostream>
 #include <string>
+#include <vector>
 #include <map>
  
 using namespace std;
 
-typedef union {
-    uint8_t ch;
-    uint16_t charCode;
-}
-ASCIICODE;
+union CharASCII {
+    char character;
+    int asciiCode;
+};
 
+bool compare(const pair<int, int> &a, const pair<int, int> &b) {
+    if (a.second == b.second)
+        return a.first > b.first;
+    
+    return a.second < b.second;
+}
+ 
 int main() {
     string text;
     
     while (getline(cin, text)) {
-        map<uint16_t, uint16_t> freq;
-        ASCIICODE code;
+        map<int, int> freq;
+        CharASCII code;
         
-        for (char character : text) {
-            code.ch = character;
-            freq[code.charCode]++;
+        for (char ch : text) {
+            code.character = ch;
+            freq[code.asciiCode]++;
         }
         
-        vector<pair<uint16_t, uint16_t>> vet(freq.begin(), freq.end());
+        vector<pair<int, int>> vet(freq.begin(), freq.end());
         
-        sort(vet.begin(), vet.end(), [](const auto &a, const auto &b) {
-            if (a.second == b.second)
-                return a.first > b.first;
-            return a.second < b.second; 
-        });
+        sort(vet.begin(), vet.end(), compare);
         
         for (const auto &code : vet) {
-            cout << code.first << " " << code.second << endl;
+            cout << code.first << " " << code.second << '\n';
         }
         
-        cout << endl;
+        cout << '\n';
     }
  
     return 0;
