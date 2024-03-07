@@ -1,40 +1,43 @@
 #include <iostream>
-#include <cctype>
-#include <regex>
+#include <string>
  
 using namespace std;
  
 int main() {
     string passwd;
-    size_t len;
     
     while (getline(cin, passwd)) {
-        len = passwd.size();
-        bool validPasswd = true, match;
+        size_t len = passwd.size();
+        bool digit, lower, upper;
+        bool valid = true;
         
-        if (len < 6 || len > 32) {
+        digit = lower = upper = false;
+        
+        if (len < 6 or len > 32) {
             cout << "Senha invalida.\n";
             continue;
         }
         
-        for (char ch : passwd) {
-            if (isspace(ch) || ispunct(ch)) {
-                cout << "Senha invalida.\n";
-                validPasswd = false;
+        for (const char &ch : passwd) {
+            if (isdigit(ch)) {
+                digit = true;
+            }
+            else if (islower(ch)) {
+                lower = true;
+            }
+            else if (isupper(ch)) {
+                upper = true;
+            }
+            else {
+                valid = false;
                 break;
             }
         }
         
-        match = regex_match(passwd, regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$"));
-        
-        if (validPasswd && match) {
+        if (lower and upper and digit and valid)
             cout << "Senha valida.\n";
-        }
-        else {
+        else
             cout << "Senha invalida.\n";
-        }
-        
-        passwd.clear();
     }
  
     return 0;
