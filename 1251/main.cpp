@@ -20,6 +20,7 @@ bool compare(const pair<int, int> &a, const pair<int, int> &b) {
  
 int main() {
     string text;
+    bool firstTest = true;
     
     while (getline(cin, text)) {
         map<int, int> freq;
@@ -34,11 +35,14 @@ int main() {
         
         sort(vet.begin(), vet.end(), compare);
         
+        if (!firstTest)
+            cout << '\n';
+        
         for (const auto &code : vet) {
             cout << code.first << " " << code.second << '\n';
         }
         
-        cout << '\n';
+        firstTest = false;
     }
  
     return 0;
