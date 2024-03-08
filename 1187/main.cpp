@@ -8,7 +8,7 @@ constexpr size_t SIZE = 12;
 int main() {
     char op;
     double mat[SIZE][SIZE];
-    double sum = 0;
+    double sum = 0, qnt = 0;
     
     cin >> op;
     
@@ -21,31 +21,22 @@ int main() {
         }
     }
     
-    if (op == 'S') {
-        for (size_t i = 0; i < (SIZE / 2) - 1; ++i) {
-            for (size_t j = 1 + i; j < SIZE - 1 - i; ++j) {
-                sum += mat[i][j];
-            }
+    for (size_t i = 0; i < (SIZE / 2) - 1; ++i) {
+        for (size_t j = 1 + i; j < SIZE - 1 - i; ++j) {
+            sum += mat[i][j];
+            qnt++;
         }
-        
+    }
+    
+    if (op == 'S') {
         cout << setprecision(1) << fixed << sum << endl;
     }
-    else if (op == 'M') {
-        double average;
-        int qnt = 0;
-        
-        for (size_t i = 0; i < (SIZE / 2) - 1; ++i) {
-            for (size_t j = 1 + i; j < SIZE - 1 - i; ++j) {
-                sum += mat[i][j];
-                qnt++;
-            }
-        }
-        
-        average = sum / static_cast<double>(qnt);
+    else {
+        double average = sum / qnt;
         
         cout << setprecision(1) << fixed << average << endl;
     }
     
- 
     return 0;
 }
+
